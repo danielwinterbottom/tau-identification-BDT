@@ -13,4 +13,12 @@ https://cds.cern.ch/record/2727092?ln=en
 
 # run all following steps on batch asking for maximum memory
 
+# prepare dataframes for 1 prong:
 
+`qsub -e /dev/null -o /dev/null -V -q hep.q -l h_rt=0:180:0 -l h_vmem=24G -cwd batch_MakeDataframe1prong.sh`
+
+# prepare dataframes for 3 prong:
+
+`qsub -e /dev/null -o /dev/null -V -q hep.q -l h_rt=0:180:0 -l h_vmem=24G -cwd batch_MakeDataframe1prong.sh`
+
+`qsub -e /dev/null -o /dev/null -V -q gpu.q -l h_rt=0:180:0 -cwd batch_MultiClass1prong.sh`

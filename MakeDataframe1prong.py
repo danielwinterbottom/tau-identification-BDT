@@ -74,6 +74,8 @@ with uproot.open(directory+"/TauData_Run2UL.root") as file1:
   df_1 = df_1[
     (df_1["tau_decay_mode_1"] <3)
     &(df_1["gen_match_1"] == 5)
+    &(df_1["tauFlag1"] <3)
+    &(df_1["tauFlag1"] >=0)
   ]
   df_1 = df_1.drop(["gen_match_1"], axis=1).reset_index(drop=True)
   
@@ -89,6 +91,8 @@ with uproot.open(directory+"/TauData_Run2UL.root") as file1:
   df_2 = df_2[
     (df_2["tau_decay_mode_2"] <3)
     &(df_2["gen_match_2"] == 5)
+    &(df_2["tauFlag2"] <3)
+    &(df_2["tauFlag2"] >=0)
   ]
   df_2 = df_2.drop(["gen_match_2"], axis=1).reset_index(drop=True)
 
@@ -176,8 +180,12 @@ df_1 = df_1.sample(frac=1).reset_index(drop=True)
 
 print df_1[:10]
 
-with open (directory+"/df_1prong_Run2UL.pkl",'w') as f:
-    pickle.dump(df_1,f)
+df_1=df_1.dropna().reset_index(drop=True)
+
+df_1.to_csv('df_1prong_Run2UL.csv', index=False)
+
+#with open (directory+"/df_1prong_Run2UL.pkl",'w') as f:
+#    pickle.dump(df_1,f)
 print 'dataframe saved!'
 
 elapsed_time = time.time() - start_time
